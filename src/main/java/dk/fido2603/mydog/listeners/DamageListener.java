@@ -2,7 +2,9 @@ package dk.fido2603.mydog.listeners;
 
 import dk.fido2603.mydog.MyDog;
 
+import dk.fido2603.mydog.managers.DogManager;
 import dk.fido2603.mydog.objects.Dog;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Wolf;
@@ -16,6 +18,23 @@ public class DamageListener implements Listener {
 
     public DamageListener(MyDog p) {
         this.plugin = p;
+    }
+
+    @EventHandler
+    public void onPlayerEntityDamage(EntityDamageByEntityEvent e) {
+        Entity attacker = e.getDamager();
+        Entity attackedEntity = e.getEntity();
+        if(attacker.getType() == EntityType.WOLF)
+        {
+            if(MyDog.getDogManager().isDog(attacker.getUniqueId()) && attackedEntity.getType() == EntityType.PLAYER) {
+                // Makes sure the dog's damage to a player is not higher than the MaxPlayerDamage in the config
+                Dog dog = MyDog.getDogManager().getDog(e.getDamager().getUniqueId());
+                if(e.getDamage() > plugin.maxPlayerDamage) {
+                    plugin.logDebug(String.format("%s dealt %s damage but was capped to %d", dog.getDogName(), e.getDamage(), plugin.maxPlayerDamage));
+                    e.setDamage(plugin.maxPlayerDamage);
+                }
+            }
+        }
     }
 
     @EventHandler

@@ -57,6 +57,7 @@ public class MyDog extends JavaPlugin {
     public boolean allowRevival = true;
     public int revivalPrice = 200;
     public boolean allowArrowDamage = false;
+    public double maxPlayerDamage = 20;
 
     public String levelUpSound = "ENTITY_WOLF_HOWL";
     public String levelUpString = "&5&l[{chatPrefix}] &r&5Your dog, {dogNameColor}{dogName}&5, just leveled up to &dLevel {level}&5!";
@@ -363,6 +364,7 @@ public class MyDog extends JavaPlugin {
         this.allowNametagRename = config.getBoolean("DogSettings.AllowNametagRename", true);
         this.allowRevival = config.getBoolean("DogSettings.AllowRevival", true);
         this.revivalPrice = config.getInt("DogSettings.RevivalPricePerLevel", 200);
+        this.maxPlayerDamage = config.getDouble("DogSettings.MaxPlayerDamage", 20);
         this.allowArrowDamage = config.getBoolean("DogSettings.AllowArrowDamage", false);
         if (config.contains("DogSettings.DogNames") && !config.getStringList("DogSettings.DogNames").isEmpty()) {
             this.dogNames = config.getStringList("DogSettings.DogNames");
@@ -430,6 +432,7 @@ public class MyDog extends JavaPlugin {
         config.set("DogSettings.AllowRevival", this.allowRevival);
         config.set("DogSettings.RevivalPricePerLevel", this.revivalPrice);
         config.set("DogSettings.AllowArrowDamage", this.allowArrowDamage);
+        config.set("DogSettings.MaxPlayerDamage", this.maxPlayerDamage);
 
         // Levels
         for (Integer level : this.dogLevels.keySet()) {
