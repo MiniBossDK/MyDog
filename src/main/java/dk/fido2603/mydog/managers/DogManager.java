@@ -120,7 +120,7 @@ public class DogManager {
 
     public Dog newDog(Wolf dog, Player dogOwner, String customName, DyeColor collarColor) {
         int dogID = generateNewId(dogOwner.getUniqueId());
-        return new Dog(dog, dogOwner, customName, collarColor, dogID, null);
+        return new Dog(dog, dogOwner, customName, collarColor, dogID, 0);
     }
 
     public Dog getDog(UUID dogId) {
